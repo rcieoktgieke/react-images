@@ -1281,22 +1281,34 @@ var Lightbox = function (_Component) {
 			var thumbnailsSize = showThumbnails ? this.theme.thumbnail.size : 0;
 			var heightOffset = this.theme.header.height + this.theme.footer.height + thumbnailsSize + this.theme.container.gutter.vertical + 'px';
 
-			return React__default.createElement(
-				'figure',
-				{ className: aphrodite.css(this.classes.figure) },
-				React__default.createElement('img', {
-					className: aphrodite.css(this.classes.image, imageLoaded && this.classes.imageLoaded),
-					onClick: onClickImage,
-					sizes: sizes,
-					alt: image.alt,
-					src: image.src,
-					srcSet: sourceSet,
-					style: {
-						cursor: onClickImage ? 'pointer' : 'auto',
-						maxHeight: 'calc(100vh - ' + heightOffset + ')'
-					}
-				})
-			);
+			if (image.component !== undefined) {
+				return React__default.createElement(
+					'figure',
+					{ className: aphrodite.css(this.classes.figure) },
+					React__default.createElement(
+						'div',
+						{ className: aphrodite.css(this.classes.image, imageLoaded && this.classes.imageLoaded) },
+						image.component
+					)
+				);
+			} else {
+				return React__default.createElement(
+					'figure',
+					{ className: aphrodite.css(this.classes.figure) },
+					React__default.createElement('img', {
+						className: aphrodite.css(this.classes.image, imageLoaded && this.classes.imageLoaded),
+						onClick: onClickImage,
+						sizes: sizes,
+						alt: image.alt,
+						src: image.src,
+						srcSet: sourceSet,
+						style: {
+							cursor: onClickImage ? 'pointer' : 'auto',
+							maxHeight: 'calc(100vh - ' + heightOffset + ')'
+						}
+					})
+				);
+			}
 		}
 	}, {
 		key: 'renderThumbnails',

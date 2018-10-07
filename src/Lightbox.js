@@ -264,27 +264,37 @@ class Lightbox extends Component {
 		const heightOffset = `${this.theme.header.height + this.theme.footer.height + thumbnailsSize
 			+ (this.theme.container.gutter.vertical)}px`;
 
-		return (
-			<figure className={css(this.classes.figure)}>
-				{/*
-					Re-implement when react warning "unknown props"
-					https://fb.me/react-unknown-prop is resolved
-					<Swipeable onSwipedLeft={this.gotoNext} onSwipedRight={this.gotoPrev} />
-				*/}
-				<img
-					className={css(this.classes.image, imageLoaded && this.classes.imageLoaded)}
-					onClick={onClickImage}
-					sizes={sizes}
-					alt={image.alt}
-					src={image.src}
-					srcSet={sourceSet}
-					style={{
-						cursor: onClickImage ? 'pointer' : 'auto',
-						maxHeight: `calc(100vh - ${heightOffset})`,
-					}}
-				/>
-			</figure>
-		);
+		if (image.component !== undefined) {
+			return (
+				<figure className={css(this.classes.figure)}>
+					<div className={css(this.classes.image, imageLoaded && this.classes.imageLoaded)}>
+						{image.component}
+					</div>
+				</figure>
+			)
+		} else {
+			return (
+				<figure className={css(this.classes.figure)}>
+					{/*
+						Re-implement when react warning "unknown props"
+						https://fb.me/react-unknown-prop is resolved
+						<Swipeable onSwipedLeft={this.gotoNext} onSwipedRight={this.gotoPrev} />
+					*/}
+					<img
+						className={css(this.classes.image, imageLoaded && this.classes.imageLoaded)}
+						onClick={onClickImage}
+						sizes={sizes}
+						alt={image.alt}
+						src={image.src}
+						srcSet={sourceSet}
+						style={{
+							cursor: onClickImage ? 'pointer' : 'auto',
+							maxHeight: `calc(100vh - ${heightOffset})`,
+						}}
+					/>
+				</figure>
+			);
+		}
 	}
 	renderThumbnails () {
 		const { images, currentImage, onClickThumbnail, showThumbnails, thumbnailOffset } = this.props;
